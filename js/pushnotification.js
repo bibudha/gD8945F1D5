@@ -19,7 +19,7 @@
 var push = {
     // Application Constructor
     initialize: function() {
-       getLicenceData();
+       
         this.bindEvents();
         
     },
