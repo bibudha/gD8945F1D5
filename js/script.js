@@ -1831,6 +1831,7 @@ function doAjaxCall(url, data, showLoading, callback) {
             }
         },
         error: function (html) {
+        	alert(html);
             //console.log(html);
         }
     });
