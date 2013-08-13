@@ -19,7 +19,9 @@
 var push = {
     // Application Constructor
     initialize: function() {
+       getLicenceData();
         this.bindEvents();
+        
     },
     // Bind Event Listeners
     //
@@ -35,7 +37,7 @@ var push = {
     onDeviceReady: function() {
         push.receivedEvent('deviceready');
 		$('.header-content .back').hide();
-        getLicenceData();
+        
         $("body").niceScroll();
     },
     tokenHandler:function(msg) {
