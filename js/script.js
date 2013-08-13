@@ -43,10 +43,10 @@ function registerAndroidDeviceId(userSite){
 //var android_devid="APA91bFQCD9Ndd8uVggMhj1usfeWsKIfGyBUWMprpZLGciWrMjS-77bIY24IMQNeEHzjidCcddnDxqYo-UEV03xw6ySmtIgQyzTqhSxhPGAi1maf6KDMAQGuUWc6L5Khze8YK9YrL9I_WD1gl49P3f_9hr08ZAS5Tw";
 var android_devid=$('#android_devid').val();
 var url=baseUrl + 'web/web/set_register_id/' + userSite + "/" + android_devid;
-//alert(url);
+alert(url);
 var data = '';
     doAjaxCall(url, data, false, function (html) {
-		
+		alert(html);
 	});
 	
 }
