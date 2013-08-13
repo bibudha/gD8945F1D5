@@ -53,11 +53,14 @@ var data = '';
 
 //set iphone device token for push notification
 function registerIphoneDeviceId(userSite){
+alert('calling');	
 var iphone_devtoken=$('#iphone_devtoken').val();
+alert(iphone_devtoken);
 var url=baseUrl + 'web/web/setIphonetoken/' + userSite + "/" + iphone_devtoken;
 var data = '';
+alert(url);
 	doAjaxCall(url,data,false,function (html){
-
+		alert(html);
 	});
 }
 // get user appereance
