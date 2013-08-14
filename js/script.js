@@ -1,5 +1,5 @@
 var Host = document.domain;
-var baseUrl = 'http://198.50.99.226/';
+var baseUrl = 'http://198.50.99.226/~admin';
 var menuLength;
 var MenuLimit = 4;		// global set accrding to theme
 var isMoreActive;	// global set according by user
