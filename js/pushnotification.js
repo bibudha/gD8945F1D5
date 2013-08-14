@@ -35,10 +35,11 @@ var push = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        push.receivedEvent('deviceready');
-		$('.header-content .back').hide();
-        
+    	$('.header-content .back').hide();
+        getLicenceData();
         $("body").niceScroll();
+        push.receivedEvent('deviceready');
+	
     },
     tokenHandler:function(msg) {
         alert("Token Handler " + msg);
