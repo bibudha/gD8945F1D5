@@ -19,7 +19,7 @@
 var push = {
     // Application Constructor
     initialize: function() {
-       
+        getLicenceData();
         this.bindEvents();
         
     },
@@ -28,6 +28,7 @@ var push = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
+    	
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
@@ -36,7 +37,7 @@ var push = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
     	$('.header-content .back').hide();
-        getLicenceData();
+       
         $("body").niceScroll();
         push.receivedEvent('deviceready');
 	
