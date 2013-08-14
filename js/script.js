@@ -1806,8 +1806,11 @@ function doAjaxCall(url, data, showLoading, callback) {
                 $('.loadingDiv').hide();
             }
         },
-        error: function (html) {
-        	alert("error"+html);
+        error: function (xhr, ajaxOptions, thrownError) {
+        	//alert("error"+html);
+        	alert(xhr.responseText);
+        	alert(xhr.status);
+        	alert(thrownError);
             //console.log(html);
         }
     });
