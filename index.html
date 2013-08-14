@@ -34,9 +34,16 @@
 
     <script src="js/jquery.bxslider.js" type="text/javascript"></script>
     <script type="text/javascript">
-    getLicenceData();
-	push.initialize();
-     </script>
+        $(document).ready(function () {
+            $('.header-content .back').hide();
+            getLicenceData();
+           	
+            $("body").niceScroll();
+	    push.initialize();
+        });
+
+
+    </script>
 </head>
 <body>
     <input type="hidden" id="userSiteId" value="">
