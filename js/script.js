@@ -45,7 +45,7 @@ var url=baseUrl + 'web/web/set_register_id/' + userSite + "/" + android_devid;
 //alert(url);
 var data = '';
     doAjaxCall(url, data, false, function (html) {
-		alert(html);
+		//alert(html);
 	});
 	
 }
@@ -57,9 +57,9 @@ var iphone_devtoken=$('#iphone_devtoken').val();
 //alert(iphone_devtoken);
 var url=baseUrl + 'web/web/setIphonetoken/' + userSite + "/" + iphone_devtoken;
 var data = '';
-alert(url);
+//alert(url);
 	doAjaxCall(url,data,false,function (html){
-		alert(html);
+		//alert(html);
 	});
 }
 // get user appereance
@@ -96,6 +96,7 @@ function getUserAppereanceFinal(userSite) {
     var showMore = false;
     var cssClass = 'bottom';
     var columnNum = 3;
+    //alert("appearance url "+url);
     doAjaxCall(url, data, false, function (html) {
         //console.log(html);
         if ($.isEmptyObject(html)) {
@@ -220,6 +221,7 @@ function getMenuList(cssClass, columnNum, showMore, userSite) {
 
     // var userSite = $('#userSiteId').val();
     var url = baseUrl + 'web/web/getTabs/' + userSite;
+    //alert("menu url "+url);
     var data = '';
     // 
     // ajax calling
@@ -1790,6 +1792,7 @@ function doAjaxCall(url, data, showLoading, callback) {
     if (showLoading) {
         $('.loadingDiv').show();
     }
+    alert(url);
     $.ajax({
         url: url,
         type: "POST",
@@ -1803,7 +1806,7 @@ function doAjaxCall(url, data, showLoading, callback) {
             }
         },
         error: function (html) {
-        	alert(html);
+        	alert("error"+html);
             //console.log(html);
         }
     });
