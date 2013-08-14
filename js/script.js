@@ -1,5 +1,5 @@
 var Host = document.domain;
-var baseUrl = (Host == 'localhost') ? 'http://localhost:8080/mobileApps/mobileApp/' : 'http://198.50.99.226/~admin/';
+var baseUrl = 'http://198.50.99.226/';
 var menuLength;
 var MenuLimit = 4;		// global set accrding to theme
 var isMoreActive;	// global set according by user
@@ -35,7 +35,6 @@ function getLicenceData() {
         //getMenuList();
         getUserAppereance();
         createMenu(id);
-		
     });
 }
 //set android deviceId for push notification 
@@ -43,10 +42,10 @@ function registerAndroidDeviceId(userSite){
 //var android_devid="APA91bFQCD9Ndd8uVggMhj1usfeWsKIfGyBUWMprpZLGciWrMjS-77bIY24IMQNeEHzjidCcddnDxqYo-UEV03xw6ySmtIgQyzTqhSxhPGAi1maf6KDMAQGuUWc6L5Khze8YK9YrL9I_WD1gl49P3f_9hr08ZAS5Tw";
 var android_devid=$('#android_devid').val();
 var url=baseUrl + 'web/web/set_register_id/' + userSite + "/" + android_devid;
-alert(url);
+//alert(url);
 var data = '';
     doAjaxCall(url, data, false, function (html) {
-		alert(html);
+		
 	});
 	
 }
@@ -323,48 +322,41 @@ function createSlider(horizontal) {
     });
     $('.Navigation > .bx-wrapper').css({ 'height': '84px' });
 }
-
 function createBackgroundSlider(appearanceid) {
     if (appearanceid != undefined && appearanceid != '' && appearanceid != null) {
         var sliderhtml = '';
         var i = 0;
         var url = baseUrl + 'web/web/getImageSliderImages/' + appearanceid;
         doAjaxCall(url, null, false, function (html) {
-           console.log(html);
-		  
+            console.log(html);
             $.each(html, function (i, item) {
 
                 if (i == 0) {
-				var	mode = item.mobileBackgroundAutoSwitchingMode;
-					
                     if (item.mobileSlider1Image != null && item.mobileSlider1Image != undefined && item.mobileSlider1Image != '') {
                         i++;
                         sliderhtml += '<div><img src="' + baseUrl + item.mobileSlider1Image + '" width="100%" height="100%" /></div>';
                     }
-                    if (item.mobileSlider2Image != null && item.mobileSlider2Image != undefined && item.mobileSlider2Image != '') {
+                    if (item.mobileSlider1Image != null && item.mobileSlider1Image != undefined && item.mobileSlider1Image != '') {
                         i++;
-                        sliderhtml += '<div><img src="' + baseUrl + item.mobileSlider2Image + '" width="100%" height="100%" /></div>';
+                        sliderhtml += '<div><img src="' + baseUrl + item.mobileSlider1Image + '" width="100%" height="100%" /></div>';
                     }
-                    if (item.mobileSlider3Image != null && item.mobileSlider3Image != undefined && item.mobileSlider3Image != '') {
+                    if (item.mobileSlider1Image != null && item.mobileSlider1Image != undefined && item.mobileSlider1Image != '') {
                         i++;
-                        sliderhtml += '<div><img src="' + baseUrl + item.mobileSlider3Image + '" width="100%" height="100%" /></div>';
+                        sliderhtml += '<div><img src="' + baseUrl + item.mobileSlider1Image + '" width="100%" height="100%" /></div>';
                     }
-                    if (item.mobileSlider4Image != null && item.mobileSlider4Image != undefined && item.mobileSlider4Image != '') {
+                    if (item.mobileSlider1Image != null && item.mobileSlider1Image != undefined && item.mobileSlider1Image != '') {
                         i++;
-                        sliderhtml += '<div><img src="' + baseUrl + item.mobileSlider4Image + '" width="100%" height="100%" /></div>';
+                        sliderhtml += '<div><img src="' + baseUrl + item.mobileSlider1Image + '" width="100%" height="100%" /></div>';
                     }
                     if ($('.bgslides').length > 0) {
                         if (i > 0) {
                             $('.bgslides').html(sliderhtml);
-								if(mode == null || mode =='' || mode ==0){
-									$('.bgslides').bxSlider({auto: false ,pager: false,controls: true});
-								}
-								if(mode == 1){
-									$('.bgslides').bxSlider({auto: true ,pager: false,controls: true });
-								}
-								if(mode == 2){
-									$('.bgslides').bxSlider({auto: true,pager: false,controls: true , mode:'fade'});
-								}
+
+                            $('.bgslides').bxSlider({
+                                auto: true,
+                                pager: false,
+                                controls: true
+                            });
                         }
 
                     }
@@ -376,17 +368,15 @@ function createBackgroundSlider(appearanceid) {
         });
     }
 }
-
 function createMenu(userSite) {
     var num = getUrlVars()['num'];
     if (num == '' || num == null || num == undefined) {
         num = 0;
     }
-	
     //var userSite = $('#userSiteId').val();
     if ($('#menupage').length > 0) {
 
-        var url = baseUrl + 'web/web/getTabs/' + userSite + '/site';
+        var url = baseUrl + 'web/web/getTabs/' + userSite;
         var data = '';
         doAjaxCall(url, data, false, function (html) {
 
@@ -447,11 +437,23 @@ function menuData(obj) {
     if (featureId == 3) {
         //geteventTab(html);
         window.location.href = "geteventTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
-
     }
+	 if (featureId == 4) {
+        //QRCoupon Tab
+        window.location.href = "qrlist.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	if(featureId == 5){
+		//emailPhoto()
+	    window.location.href="email_photo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;;
+    }
+	
     if (featureId == 6) {
         //getfanwallTab(html);
         window.location.href = "getfanwallTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	 if (featureId == 7) {
+        //Arround us Tab
+        window.location.href = "app_aroundus.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
     if (featureId == 8) {
         //artistInfoTab(html);
@@ -466,6 +468,10 @@ function menuData(obj) {
         //locationTab(html);
         window.location.href = "locationTab.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
+	if (featureId == 12) {
+        //Tell a Friend
+        window.location.href = "app_tell_a_friend.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
     if (featureId == 14) {
         //webSiteInfo(html);
         window.location.href = "webSiteInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
@@ -474,17 +480,58 @@ function menuData(obj) {
         //youtubeTabInfo(html);
         window.location.href = "youtubeTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
+	if (featureId == 23) {
+        //Car finder
+       // window.location.href = "app_gps.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	if (featureId == 25) {
+        //GPS Coupon
+        window.location.href = "app_gps.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	if (featureId == 26) {
+        //MortgageTabInfo()
+        window.location.href = "mortgageTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	if(featureId == 27)
+	{
+	//Music Tab
+	window.location.href = "audioPlayer/player.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+	}
+	if (featureId == 28) {
+		//wofoo
+        window.location.href = "app_wufoo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
     if (featureId == 29) {
         //callUSInfo(html);
         window.location.href = "callUSInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
+	 if (featureId == 30) {
+        //Changer;
+        //window.location.href = "callUSInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
 	if (featureId == 31) {
-        //callUSInfo(html);
+        //deliver tab;
         window.location.href = "deliver.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
+	if(featureId == 32){
+		//Direction view Tab
+		window.location.href="directions.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+	}
+	if(featureId == 33){
+		//Event Tab2
+		//window.location.href="directions.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+	}
+	if(featureId == 34){
+		//Fanwall2
+		//window.location.href="directions.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+	}
     if (featureId == 35) {
         //aboutUSInfo(html);
         window.location.href = "aboutUSInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	if (featureId == 37) {
+        //Loyalty Tab
+        window.location.href = "loyality.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
     if (featureId == 38) {
         //NewsletterInfo(html);
@@ -495,6 +542,18 @@ function menuData(obj) {
         //menuTabInfo(html);
         window.location.href = "menuTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
+	if (featureId == 40) {
+        //PDF tab
+        window.location.href = "pdf.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	 if (featureId == 41) {
+        //Podcast
+        window.location.href = "app_podcast.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	if (featureId == 42) {
+        //QR scanner
+        window.location.href = "QR_Scanner.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
     if (featureId == 43) {
         //RssTabInfo(html);
         window.location.href = "RssTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
@@ -504,12 +563,34 @@ function menuData(obj) {
         //sportTabInfo(html);
         window.location.href = "sportTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
-    if (featureId == 50) {
+	 if (featureId == 45) {
+        //Tip calculator
+        window.location.href = "tipcalcTabInfo.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	 if (featureId == 46) {
+        //Voice recording
+        window.location.href = "app_recording.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+    if (featureId == 47) {
+        //Email form
+        //window.location.href = "app_recording.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	if (featureId == 48) {
+        //Reservation 
+        window.location.href = "app_reservation.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	if (featureId == 49) {
+        //News 
+        //window.location.href = "app_reservation.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
+    }
+	if (featureId == 50) {
         window.location.href = "food_home.html?transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
     if (featureId == 51) {
+		
         window.location.href = "merchandise.html?transferId=" + featureRelId + "&touchId=" + userSiteId;
     }
+	
     if (featureId == 52) {
         //infoTab3Info(html);
         window.location.href = "infoTab3Info.html?mId=" + featureId + "&transferId=" + featureRelId + "&touchId=" + userSiteId;
@@ -1359,7 +1440,7 @@ function RssTabInfo() {
         if ($.isEmptyObject(html)) {
             $('#main-content').html('Sorry we have an Podcast Tab data');
         } else {
-            console.log(html);
+            //console.log(html);
             var data = '';
             // data='<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.3.1_mobilePrev.css">';
 
@@ -1368,9 +1449,7 @@ function RssTabInfo() {
             var error = '';
             var image = '';
             var i = 1;
-			 var mobileBackground
             $.each(html, function (i, item) {
-			   mobileBackground = item.mobileBackground;
                 if (i == 0) { addBackground(item); }
                 if (i % 2 == 0) {
                     className = 'evenbg';
@@ -1381,12 +1460,13 @@ function RssTabInfo() {
                     date = item.date;
                     data += '<li   data-role="list-divider" role="heading" class="ui-li ui-li-divider ui-bar-d ui-first-child" rel="external">' + item.date + '</li>';
                 }
-                if (item.RsstIcon !=''){
-                    image = item.RsstIcon;
-                }else{
+                if (item.RssIcon) {
+                    image = item.RssIcon;
+                } else {
                     image = 'assets/images/rss.png';
                 }
-				data += '<li id="' + i + '" class="' + className + '" style=""><a href="RssDescription.html?id=' + i + '&mId=' + featureId + '&touchId=' + userSiteId + '&transferId=' + featureRelId + '" rel="external"><img src="' + baseUrl + image + '" alt="" rel="external"><h3>' + item.title + '</h3></a></li>';
+
+                data += '<li id="' + i + '" class="' + className + '" style=""><a href="RssDescription.html?id=' + i + '&mId=' + featureId + '&touchId=' + userSiteId + '&transferId=' + featureRelId + '" rel="external"><img src="' + baseUrl + image + '" alt="" rel="external"><h3>' + item.title + '</h3></a></li>';
                 if (item.error != '') {
 
                     error = item.error;
@@ -1395,7 +1475,6 @@ function RssTabInfo() {
             });
             data += '</ul>';
         }
-		$('body').css({ 'background-image': 'url(" '+ baseUrl + mobileBackground + '")' });
         $('#main-content').html(data);
         if (error) {
             $('#main-content').html(error);
@@ -1438,8 +1517,6 @@ function RssDescription() {
                         $('#main-content').html(description);
                     }
                     $('#main-content').css({ 'background-color': '#' + backGroundColor, 'color': '#' + textColor });
-					  var mobileBackground = item.mobileBackground;
-					$('body').css({ 'background-image': 'url(" '+ baseUrl + mobileBackground + '")' });
                 }
             })
 
@@ -1459,131 +1536,26 @@ function readmeRss() {
         if ($.isEmptyObject(html)) {
             $('#main-content').html('Sorry we have an Podcast Tab data');
         } else {
-			console.log(html);
             $.each(html, function (i, item) {
-			if(i== id){
-			//alert('dsa');
-                var RssDescriptionrel = item.link;
-                var mobileBackground = item.mobileBackground;
+                var RssDescriptionrel = $(id).find('a').attr('src');
                 title = item.title;
                 //alert(RssDescriptionrel);
-                var description = '<iframe src="' + RssDescriptionrel + '" frameborder="0" height="100%" width="100%" scrolling="yes" allowtransparency="yes" seamless>';
-                description += '</iframe>';
+                var description = '<iframe src="' + RssDescriptionrel + '" frameborder="0" height="100%" width="100%" scrolling="yes" allowtransparency="yes">';
+                description += '<iframe>';
                 if (description == '') {
                     $('#main-content').html('Sorry We Have An Empty Data');
                 } else {
                     $('.ui-title').html(title);
-					//alert(description);
                     $('#main-content').html(description);
-					$('#main-content').trigger('create');
                 }
-                $('body').css({ 'background-image': 'url(" '+ baseUrl + mobileBackground + '")' });
+                $('#main-content').css({ 'background-color': '#' + backGroundColor, 'color': '#' + textColor });
                 getUserAppereance();
-			}
+
             })
         }
     });
 }
 
-function deliverInfoTab() {
-    var featureRelId = getUrlVars()['transferId'];
-    var userSiteId = getUrlVars()['touchId'];
-    var featureId = getUrlVars()['mId'];
-    var url = baseUrl + 'web/web/getMenuHtml/' + featureId + '/' + featureRelId + '/' + userSiteId;
-
-    var data = '';
-    doAjaxCall(url, data, false, function (html) {
-        if ($.isEmptyObject(html)) {
-            $('#main-content').html('Sorry we have an info Tab data');
-        } else {
-		 
-             data += '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="deliverclass">';
-			 $.each(html, function (i, item) {
-			 data += '<li ><a data-ajax="false" href="delivermap.html?lat=' + item.latitude + '&long=' + item.longitude + '&location=' + item.city + '&mId=' + featureId  + '&touchId=' + userSiteId  + '&transferId=' + featureRelId  + '&telephone=' + item.telephone   + '&email=' + item.email  + '&website=' + item.website   + '" ><img src="images/tab_home.png" alt="" class="ui-li-icon" style="margin-top:20px"/><h2>'+item.address1+' '+item.address2+'</h2> <br><p>'+item.city+' '+item.state+'</p></a></li>';
-			 });
-
-			
-
-          
-			data+='</ul>';
-            $('#main-content').html(data);
-			
-            $('#main-content').trigger('create');
-        }
-		 
-		 });
-        try {
-            $("#deliverclass").listview('refresh');
-        } catch (e) {
-            $("#deliverclass").listview();
-        }
-        getUserAppereance();
-    
-}
-
-function showMap() {
-
-    var website = getUrlVars()['website'];
-	 var email = getUrlVars()['email'];
-	  var telephone = getUrlVars()['telephone'];
-	   var featureRelId = getUrlVars()['transferId'];
-	    var userSiteId = getUrlVars()['touchId'];
-		 var featureId = getUrlVars()['mId'];
-
-	   var lat = getUrlVars()['lat'];
-	   var long = getUrlVars()['long']; location
-    var userLocation = getUrlVars()['location'];
-    if (lat == '' || lat == undefined || lat == null) {
-        userLocation = ' another location';
-    }
-    var i = 0;
-    if (lat != '' && lat != undefined && lat != null) {
-        i++;
-    }
-    if (lat != '' && lat != undefined && lat != null) {
-        i++;
-    }
-    if (i == 2) {
-
-        var html = "";
-        html += "<div style='padding:10px'><h4>Points showing <strong>your current location</strong> and <strong>and entered location</strong></h4> </div>";
-		
-		var showButton='<div data-role="controlgroup" data-type="horizontal"> <a href="tel:'+telephone+'" data-role="button"  data-iconpos="top">Call us</a>  <a rel="external" href="detail.html?id=0&transferId='+featureRelId+'&touchId=' + userSiteId + '&mId=' + featureId + '&return_url=' + website + '" data-role="button" data-iconpos="top">Website</a>   <a rel="external" href="mailto:'+email+'?Subject=share location?body=latitude is '+lat+' and longitude is '+long+'" data-role="button"  data-iconpos="top">Email</a></div>';
-        $('#direction-detail').html(html);
-		$('#direction-buttons').html(showButton);
-      
-	  $('#map_canvas').gmap().bind('init', function (evt, map) {
-			var Position2 = new google.maps.LatLng(lat, long);
-		$('#map_canvas').gmap('addMarker', { 'position': Position2, 'bounds': true }).click(function () {
-		$('#map_canvas').gmap('openInfoWindow', { 'content': '<div>' + userLocation + '</div>' }, this);
-		});
-            $('#map_canvas').gmap('getCurrentPosition', function (position, status) {
-		
-                if (status === 'OK') {
-                    var clientPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    
-                    $('#map_canvas').gmap('addMarker', { 'position': clientPosition, 'bounds': true }).click(function () {
-                        $('#map_canvas').gmap('openInfoWindow', { 'content': '<div>My current location</div>' }, this);
-                    });
-
-                   
-                }
-            });
-        });
-		
-    } else {
-        var html = "<h3>Get directions</h3>";
-        html += "<div style='padding:10px'>Sorry ! Failed to load directions. </div>";
-		$('#main-content').html(html);
-    }
-
-
- try {
-                $("#main-content").trigger('create');
-            } catch (e) {
-                $("#main-content").listview();
-            }
-}
 
 
 function NewsletterInfo() {
@@ -1831,7 +1803,6 @@ function doAjaxCall(url, data, showLoading, callback) {
             }
         },
         error: function (html) {
-        	alert("error"+html);
             //console.log(html);
         }
     });
@@ -2013,6 +1984,487 @@ function createMap() {
 
 }
 
+
+function MortgageTabInfo() {
+    var featureRelId = getUrlVars()['transferId'];
+    var userSiteId = getUrlVars()['touchId'];
+    var featureId = getUrlVars()['mId'];
+    var url = baseUrl + 'web/web/getMenuHtml/' + featureId + '/' + featureRelId + '/' + userSiteId;
+
+    var data = '';
+    doAjaxCall(url, data, false, function (html) {
+        if ($.isEmptyObject(html)) {
+            $('#main-content').html('Sorry we have an info Tab data');
+        } else {
+		 
+            var data = ' <div class="mortgage ui-content corner-all">';
+			 $.each(html, function (i, item) {
+			 data+='<form method="post"><input type="hidden" name="mortgageCalculatorTabId" id="mortgageCalculatorTabId" value="'+item.mortgageCalculatorTabId+'"><div data-role="fieldcontain"><label for="loanAmmount">Loan Amount: </label><input type="text" name="loanAmmount" id="loanAmmount" placeholder="Input Amount" value=""></div><div data-role="fieldcontain"><label for="loanterm">Loan term: </label><input type="text" name="loanterm" id="loanterm" placeholder="Input term in Years" value=""></div>';
+			 if(item.readonly==0){
+			 data+='<div data-role="fieldcontain"><label for="loanRate">Loan Rate in %: </label><input type="text" name="loanRate" id="loanRate" placeholder="Input Rate in %" value="'+item.interestRate+'"></div></form>';
+			 }else{
+			 data+='<div data-role="fieldcontain"><label for="loanRate">Loan Rate in %: </label><input  disabled="disabled" type="text" placeholder="Input Rate in %" name="loanRate" id="loanRate" value="'+item.interestRate+'">(enter 10 % as 10)</div></form>';}
+			 });
+
+
+
+            data += '</div><a href="" data-theme="b" data-role="button" id="calculate">Calculate</a><center><p>Your Monthly Payment Will Be:</p><p style="width:20%;"><input  disabled="disabled" type="text" name="totalAmt" id="totalAmt" value=""></p><p>These Figures are only a guide. We Recomend that </p><p> you obtain Exact Figures from Specific lender</p><p> before commiting to any loan </p></center>';
+			
+            $('#main-content').html(data);
+
+            $(' #calculate').click(function () {
+                var LoanAmt = parseFloat($('#loanAmmount').val());
+				 var loanterm = parseFloat($('#loanterm').val());
+				  var loanRate = parseFloat($('#loanRate').val());
+			if(LoanAmt!=NaN)
+            {if(loanRate!=NaN)
+            {if(loanterm!=NaN)
+            {var rate= loanRate/1200;
+			var months=loanterm*12;
+			var base=1+rate;
+			for(;months>1;months--){
+			base=base*(1+rate);
+			}
+			base=base-1;
+			var val=(rate+(rate/base))*LoanAmt;
+			//alert(val);
+			$('#totalAmt').attr('value',val);
+			}}} 			
+            });
+            $('#main-content').trigger('create');
+        }
+        getUserAppereance();
+    });
+}
+
+//deliver tab
+function deliverInfoTab() {
+    var featureRelId = getUrlVars()['transferId'];
+    var userSiteId = getUrlVars()['touchId'];
+    var featureId = getUrlVars()['mId'];
+    var url = baseUrl + 'web/web/getMenuHtml/' + featureId + '/' + featureRelId + '/' + userSiteId;
+
+    var data = '';
+    doAjaxCall(url, data, false, function (html) {
+        if ($.isEmptyObject(html)) {
+            $('#main-content').html('Sorry we have an info Tab data');
+        } else {
+		 
+             data += '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="deliverclass">';
+			 $.each(html, function (i, item) {
+			 data += '<li ><a data-ajax="false" href="delivermap.html?lat=' + item.latitude + '&long=' + item.longitude + '&location=' + item.city + '&mId=' + featureId  + '&touchId=' + userSiteId  + '&transferId=' + featureRelId  + '&telephone=' + item.telephone   + '&email=' + item.email  + '&website=' + item.website   + '" ><img src="images/tab_home.png" alt="" class="ui-li-icon" style="margin-top:20px"/><h2>'+item.address1+' '+item.address2+'</h2> <br><p>'+item.city+' '+item.state+'</p></a></li>';
+			 });
+
+			
+
+          
+			data+='</ul>';
+            $('#main-content').html(data);
+			
+            $('#main-content').trigger('create');
+        }
+		 
+		 });
+        try {
+            $("#deliverclass").listview('refresh');
+        } catch (e) {
+            $("#deliverclass").listview();
+        }
+        getUserAppereance();
+    
+}
+
+//show map for deliver tab
+function showMap() {
+
+    var website = getUrlVars()['website'];
+	 var email = getUrlVars()['email'];
+	  var telephone = getUrlVars()['telephone'];
+	   var featureRelId = getUrlVars()['transferId'];
+	    var userSiteId = getUrlVars()['touchId'];
+		 var featureId = getUrlVars()['mId'];
+
+	   var lat = getUrlVars()['lat'];
+	   var long = getUrlVars()['long']; location
+    var userLocation = getUrlVars()['location'];
+    if (lat == '' || lat == undefined || lat == null) {
+        userLocation = ' another location';
+    }
+    var i = 0;
+    if (lat != '' && lat != undefined && lat != null) {
+        i++;
+    }
+    if (lat != '' && lat != undefined && lat != null) {
+        i++;
+    }
+    if (i == 2) {
+
+        var html = "";
+        html += "<div style='padding:10px'><h4>Points showing <strong>your current location</strong> and <strong>and entered location</strong></h4> </div>";
+		
+		var showButton='<div data-role="controlgroup" data-type="horizontal"> <a href="tel:'+telephone+'" data-role="button"  data-iconpos="top">Call us</a>  <a rel="external" href="detail.html?id=0&transferId='+featureRelId+'&touchId=' + userSiteId + '&mId=' + featureId + '&return_url=' + website + '" data-role="button" data-iconpos="top">Website</a>   <a rel="external" href="mailto:'+email+'?Subject=share location?body=latitude is '+lat+' and longitude is '+long+'" data-role="button"  data-iconpos="top">Email</a></div>';
+        $('#direction-detail').html(html);
+		$('#direction-buttons').html(showButton);
+      
+	  $('#map_canvas').gmap().bind('init', function (evt, map) {
+			var Position2 = new google.maps.LatLng(lat, long);
+		$('#map_canvas').gmap('addMarker', { 'position': Position2, 'bounds': true }).click(function () {
+		$('#map_canvas').gmap('openInfoWindow', { 'content': '<div>' + userLocation + '</div>' }, this);
+		});
+            $('#map_canvas').gmap('getCurrentPosition', function (position, status) {
+		
+                if (status === 'OK') {
+                    var clientPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    
+                    $('#map_canvas').gmap('addMarker', { 'position': clientPosition, 'bounds': true }).click(function () {
+                        $('#map_canvas').gmap('openInfoWindow', { 'content': '<div>My current location</div>' }, this);
+                    });
+
+                   
+                }
+            });
+        });
+		
+    } else {
+        var html = "<h3>Get directions</h3>";
+        html += "<div style='padding:10px'>Sorry ! Failed to load directions. </div>";
+		$('#main-content').html(html);
+    }
+
+
+ try {
+                $("#main-content").trigger('create');
+            } catch (e) {
+                $("#main-content").listview();
+            }
+}
+
+//direction view tab
+function directionViewTab() {
+    var featureRelId = getUrlVars()['transferId'];
+    var userSiteId = getUrlVars()['touchId'];
+    var featureId = getUrlVars()['mId'];
+    var url = baseUrl + 'web/web/getMenuHtml/' + featureId + '/' + featureRelId + '/' + userSiteId;
+    alert(url);
+    var data = '';
+    doAjaxCall(url, data, false, function (html) {
+        if ($.isEmptyObject(html)) {
+            $('#main-content').html('Sorry we have an empty data');
+        } else {
+		 
+             data += '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="deliverclass">';
+			 $.each(html, function (i, item) {
+			 data += '<li ><a data-ajax="false" href="directionmap.html?lat=' + item.latitude + '&long=' + item.longitude + '&location=' + item.city + '&mId=' + featureId  + '&touchId=' + userSiteId  + '&transferId=' + featureRelId  + '" ><img src="images/tab_home.png" alt="" class="ui-li-icon" style="margin-top:20px"/><h2>'+item.address1+' '+item.address2+'</h2> <br><p>'+item.city+' '+item.state+'</p></a></li>';
+			 });
+
+			data+='</ul>';
+            $('#main-content').html(data);
+			
+            $('#main-content').trigger('create');
+        }
+		 
+		 });
+        try {
+            $("#deliverclass").listview('refresh');
+        } catch (e) {
+            $("#deliverclass").listview();
+        }
+        getUserAppereance();
+    
+}
+
+//Loyalty Tab
+function loyaltyInfo() {
+
+    var featureRelId = getUrlVars()['transferId'];
+    var userSiteId = getUrlVars()['touchId'];
+    var featureId = getUrlVars()['mId'];
+    var url = baseUrl + 'web/web/getMenuHtml/' + featureId + '/' + featureRelId + '/' + userSiteId;
+
+    var data = '';
+    doAjaxCall(url, data, false, function (html) {
+        console.log(html);
+		LoyalityHTML = html;
+        if ($.isEmptyObject(html)) {
+            $('#main-content').html('Sorry we have no data for call us tab');
+        } else {
+            var i = 1;
+			var backgroundImage;
+            var data = '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="loyalityclass">';
+            $.each(html, function (i, item) {
+                if (i % 2 == 0) {
+                    className = 'evenbg';
+                } else {
+                    className = 'oddbg';
+                }
+			//	"loyaltyTabId":"1","reward":"1","secretcode":"123","imageUpload":"","squareCount":"4","mobileBackground":"assets\/images\/set_default_mobile.jpg","iphone5Background":"assets\/images\/set_default_iphone.jpg","tabletBackground":"assets\/images\/set_default_tablet.jpg"
+              
+			  backgroundImage=item.mobileBackground;
+			  
+                data += '<li class="' + className + '"><a href="loyaltycoupon.html?touchId='+userSiteId+'&transferId='+featureRelId+'&tabid='+item.loyaltyTabId+'&mId='+featureId+'" rel="external"><h3>' + item.reward + '</h3></a></li>';
+            })
+            data += '</ul>';
+            $('#main-content').html(data);
+            try {
+                $("#loyalityclass").listview('refresh');
+            } catch (e) {
+                $("#loyalityclass").listview();
+            }
+
+        }
+        getUserAppereance();
+    });
+}
+
+//Loyalty coupon
+function couponloyaltyInfo() {
+
+    var featureRelId = getUrlVars()['transferId'];
+    var userSiteId = getUrlVars()['touchId'];
+	 var featureId = getUrlVars()['mId'];
+    var tabid = getUrlVars()['tabid'];
+
+    var url = baseUrl + 'web/web/getMenuHtml/' + featureId + '/' + featureRelId + '/' + userSiteId;
+
+    var data = '';
+    doAjaxCall(url, data, false, function (html) {
+        console.log(html);
+      
+        if ($.isEmptyObject(html)) {
+            $('#main-content').html('Sorry we have no data for call us tab');
+        } else {
+            var i = 1;
+           
+				
+            $.each(html, function (i, item) {
+			
+           if(item.loyaltyTabId==tabid)
+		   {
+		   //alert('hi');
+		
+            var    backgroundImage=item.mobileBackground;
+		
+			var    imageUpload=item.imageUpload;
+			var    squareCount=item.squareCount;
+			
+			 $('#secretcode').val(item.secretcode);
+			//alert(imageUpload);
+			 $('#CouponName').text(item.reward);
+			  var data = '<ul data-role="listview" data-inset="false" data-divider-theme="d" id="loyalityclass">';
+			
+			 for(var i=1;i<=squareCount;i++)
+			  {
+				 if(imageUpload==''){
+					  data += '<img src="images/003.png" id="'+i+'" height="50" width="50" class="loyalityimage">';
+				 }else{
+					  data += '<img src="'+imageUpload+'" id="'+i+'" height="50" width="50" class="loyalityimage">';
+				}
+			}
+			  $('#CouponImage').html(data);
+               
+           }
+		   })
+            data += '</ul>';
+           // $('#main-content').html(data);
+            try {
+                $("#loyalityclass").listview('refresh');
+            } catch (e) {
+                $("#loyalityclass").listview();
+            }
+
+        }
+        getUserAppereance();
+    });
+}
+
+//Tip Calculator
+function tipcalcTabInfo() {
+    var featureRelId = getUrlVars()['transferId'];
+    var userSiteId = getUrlVars()['touchId'];
+    var featureId = getUrlVars()['mId'];
+    var url = baseUrl + 'web/web/getMenuHtml/' + featureId + '/' + featureRelId + '/' + userSiteId;
+
+    var data = '';
+    doAjaxCall(url, data, false, function (html) {
+        if ($.isEmptyObject(html)) {
+            $('#main-content').html('Sorry we have an info Tab data');
+        } else {
+		 
+            var data = ' <div class="tipcalc ui-content corner-all">';
+			 $.each(html, function (i, item) {
+			 data+='<form method="post"><input type="hidden" name="tipCalculatorId" id="tipCalculatorId" value="'+item.tipCalculatorId+'"><div data-role="fieldcontain"><label for="CheckAmmount">Check Amount: </label><input type="text" name="CheckAmmount" id="CheckAmmount" placeholder="Input Amount" value="1000"></div>';
+			data+='<div data-role="fieldcontain" id="sliderval"><label for="slider">tip in % </label><input name="slider" id="slider" value="1" min="1" max="30" type="range"></div>';
+			 });
+
+			data+='<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" id="personCount" ><legend>Number of Persons</legend><input name="radio-choice-b" id="radio-choice-c" checked="checked"  type="radio" value="1"><label for="radio-choice-c">1</label><input name="radio-choice-b" id="radio-choice-d" value="2" type="radio"><label for="radio-choice-d">2</label><input name="radio-choice-b" id="radio-choice-e" value="3" type="radio"><label for="radio-choice-e">3</label><input name="radio-choice-b" id="radio-choice-f" value="4" type="radio"><label for="radio-choice-f">4</label><input name="radio-choice-b" id="radio-choice-g" value="5" type="radio"><label for="radio-choice-g">5</label><input name="radio-choice-b" id="radio-choice-h" value="6" type="radio"><label for="radio-choice-h">6</label><input name="radio-choice-b" id="radio-choice-i" value="7" type="radio"><label for="radio-choice-i">7</label><input name="radio-choice-b" id="radio-choice-j" value="8" type="radio"><label for="radio-choice-j">8</label><input name="radio-choice-b" id="radio-choice-k" value="9" type="radio"><label for="radio-choice-k">9</label></fieldset>';
+
+            data += '</div><div data-role="fieldcontain"><label>Total tip </label><span id="totalTip"></span></div><div data-role="fieldcontain"><label for="totalAmt">Total Amount </label><span id="totalAmt"></span></div><div data-role="fieldcontain"><label for="TipPerPerson">Tip Each Pays </label><span id="TipPerPerson"></span></div><div data-role="fieldcontain"><label for="AmtPerPerson">Each Pays </label><span id="AmtPerPerson"></span></div><a href="#" data-role="button" data-inline="true"  id="calculate">Calculate</a><a href="#" data-role="button" data-inline="true" id="reset" >Reset</a>';
+			
+            $('#main-content').html(data);
+			$('#personCount input[name=radio-choice-b]').click(function (){
+			updatetip();
+			});
+			$('#CheckAmmount').change(function (){
+			updatetip();
+			});
+            $('#reset').click(function () {
+ 			$('#totalTip').text(0.00);
+			$('#totalAmt').text(0.00);
+			$('#TipPerPerson').text(0.00);
+			$('#AmtPerPerson').text(0.00);
+			$('#CheckAmmount').val(0);
+			
+			
+            });
+			 $('#calculate').click(function () {
+ 			updatetip();
+            });
+			$('#sliderval a').click(function () {
+ 			updatetip();
+            });
+            $('#main-content').trigger('create');
+        }
+        getUserAppereance();
+    });
+}
+function updatetip() {
+			//alert($('#personCount input[name=radio-choice-b]:checked').val());
+                var CheckAmmount = parseFloat($('#CheckAmmount').val());
+				 var percent = parseFloat($('#sliderval a').attr('title'));
+				 var percount=$('#personCount input[name=radio-choice-b]:checked').val();
+			if(CheckAmmount!=NaN)
+			{if(percent!=NaN)
+            {var tip = percent*CheckAmmount/100;
+			var totAmt=CheckAmmount+tip;
+			var TipPerPer=tip/percount;
+			var personAmt=totAmt/percount;
+	
+			$('#totalTip').text(tip);
+			$('#totalAmt').text(totAmt);
+			$('#TipPerPerson').text(TipPerPer);
+			$('#AmtPerPerson').text(personAmt);
+			
+			}}
+}
+
+//Music List
+function musicList()
+		{
+		var featureRelId = getUrlVars()['transferId'];
+	var userSiteId = 	getUrlVars()['touchId'];
+	
+	var url = baseUrl+'web/web/getMusicPlayer/'+featureRelId+'/'+userSiteId;
+	//alert(url);
+	var data = '';
+		doAjaxCall(url,data,false,function(html){		
+		if($.isEmptyObject(html)){
+			$('#main-content').html('Sorry we have an Empty data');
+		}else{
+		var backGroundColor,textColor;
+		var data =' <div class="ui-content"  > <ul data-role="listview" data-split-icon="custom" data-autodividers="true" data-filter="true" data-inset="false" id="music-list" >';
+		var list='<div data-role="content" data-theme="d" class="ui-content" ><ul data-role="listview" data-autodividers="true" data-filter="true" data-inset="false">';
+			    
+          var tintColor;
+		  var album_art_image;
+			$.each(html,function(i,item){
+					list+='<li rel="'+item.track_url+'" tit="'+item.title+'" art="'+item.artist+'"><h3>'+item.title+'</h3><p>Album : '+item.album+'</p></li>';
+					
+				tintColor= item.tintColor;
+					data +=' <li style="background:url(images/010.jpg) no-repeat; background-size:100% 100%;"><span class="play2 toogle ui-corner-all" rel="'+item.track_url+'" tit="'+item.title+'" art="'+item.artist+'"></span><a href="../musicAlbum_details.html?transferId=' + featureRelId + '&touchId=' + userSiteId + '&playerId='+item.trackId+'" rel="external" ><h3>'+item.title+'</h3><p>Album : '+item.album+'</p></a> <a href="detail.html?id=' + 0 + '&transferId=' + featureRelId + '&touchId=' + userSiteId + '&mId=0&return_url='+item.Pur_url+'">Buy</a></li>';
+					//alert("hi");
+					});
+			data +='</ul></div>';	
+			list +='</ul></div>';	
+			$('#music-data').html(data);
+			$('#showallsongs').html(list);
+			
+			$("#music-list span").bind('click',function(){
+			if($(this).hasClass("play2"))
+			{
+				$(this).removeClass('play2');
+				$(this).addClass('pause2');
+				
+				var url= $(this).attr('rel');
+				var title= $(this).attr('tit');
+				var artist= $(this).attr('art');
+				 $('#songurl').attr('value',url);
+				 $('#songtitle').attr('value',title);
+				 $('#songArtist').attr('value',artist);
+				 $("#player-play").trigger('click');
+				}
+			else{
+			
+				$(this).removeClass('pause2');
+				$(this).addClass('play2');
+				 $("#player-play").trigger('click');
+				}
+			});
+			}try {
+          $("#music-list").listview('refresh');
+      } catch (e) {
+          $("#music-list").listview();
+      }
+			getUserAppereance();
+			});
+		}
+	//Music detail	
+	function musicDetail() {
+		var featureRelId = getUrlVars()['transferId'];
+	var userSiteId = 	getUrlVars()['touchId'];
+	var trackId = 	getUrlVars()['playerId'];
+	
+	var url = baseUrl+'web/web/getMusicById/'+featureRelId+'/'+userSiteId+'/'+trackId;
+	//alert(url);
+	var data = '';
+		doAjaxCall(url,data,false,function(html){		
+		if($.isEmptyObject(html)){
+			$('#main-content').html('Sorry we have an Empty data');
+		}else{
+			$.each(html,function(i,item){
+					
+					
+					$('#artistImage').attr('src',item.album_art_image);
+	$('#artistName').text(item.artist);
+	$('#songname').html(item.title);
+	$('#albumName').html(item.album);
+	$('#buyurl').attr('href',item.track_url);
+					});
+			
+			
+			
+			}
+			getUserAppereance();
+			});
+	
+	}
+//GPS Coupon
+function getGPSPosition() {
+
+    //$('#map_canvas').gmap({ 'zoom': 15, 'center': '28.459497, 77.02663799999999' }).bind('init', function () {
+    //    $('#map_canvas').gmap('addMarker', { 'position': '28.459497, 77.02663799999999', 'bounds': false }).click(function () {
+    //        $('#map_canvas').gmap('openInfoWindow', { 'content': 'Hello World' }, this);
+    //    });
+    //});
+
+
+    $('#map_canvas').gmap().bind('init', function (evt, map) {
+
+        $('#map_canvas').gmap('getCurrentPosition', function (position, status) {
+            if (status === 'OK') {
+
+                console.log(position);
+                var clientPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+                $('#map_canvas').gmap('addMarker', { 'position': clientPosition, 'bounds': true, icon: "images/Map-Marker-Marker-Outside-Pink.png" }).click(function () {
+                    $('#map_canvas').gmap('openInfoWindow', { 'content': '<div>My current location</div>' }, this);
+                });
+            }
+        });
+
+    });
+
+}
+	
 
 
 // One-shot position request.
