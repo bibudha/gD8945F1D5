@@ -45,7 +45,7 @@ var url=baseUrl + 'web/web/set_register_id/' + userSite + "/" + android_devid;
 //alert(url);
 var data = '';
     doAjaxCall(url, data, false, function (html) {
-		
+		alert(html);
 	});
 	
 }
@@ -1803,6 +1803,7 @@ function doAjaxCall(url, data, showLoading, callback) {
             }
         },
         error: function (html) {
+        	alert(html);
             //console.log(html);
         }
     });
