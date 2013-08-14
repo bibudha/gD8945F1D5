@@ -33,6 +33,7 @@ function getLicenceData() {
         //alert(id);
         $('#userSiteId').val(id);
         //getMenuList();
+        alert(id);
         getUserAppereance();
         createMenu(id);
     });
