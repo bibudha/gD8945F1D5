@@ -33,7 +33,7 @@ function getLicenceData() {
         //alert(id);
         $('#userSiteId').val(id);
         //getMenuList();
-        alert(id);
+        //alert(id);
         getUserAppereance();
         createMenu(id);
     });
@@ -1808,9 +1808,9 @@ function doAjaxCall(url, data, showLoading, callback) {
         },
         error: function (xhr, ajaxOptions, thrownError) {
         	//alert("error"+html);
-        	alert(xhr.responseText);
+        	/*alert(xhr.responseText);
         	alert(xhr.status);
-        	alert(thrownError);
+        	alert(thrownError);*/
             //console.log(html);
         }
     });
