@@ -1793,7 +1793,7 @@ function doAjaxCall(url, data, showLoading, callback) {
     if (showLoading) {
         $('.loadingDiv').show();
     }
-    alert(url);
+    //alert(url);
     $.ajax({
         url: url,
         type: "POST",
