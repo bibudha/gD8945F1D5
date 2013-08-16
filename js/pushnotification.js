@@ -43,7 +43,7 @@ var push = {
 	
     },
     tokenHandler:function(msg) {
-        alert("Token Handler " + msg);
+        //alert("Token Handler " + msg);
         console.log("Token Handler " + msg);
 		$('#iphone_devtoken').val(msg);
 		var siteId=$('#userSiteId').val();
@@ -52,11 +52,11 @@ var push = {
     },
     errorHandler:function(error) {
         console.log("Error Handler  " + error);
-        alert("Error code"+error);
+       // alert("Error code"+error);
     },
     // result contains any message sent from the plugin call
     successHandler: function(result) {
-        alert('Success! Result = '+result)
+       // alert('Success! Result = '+result)
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -76,7 +76,7 @@ var push = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
         
-        alert('Received Event: ' + id);
+        //alert('Received Event: ' + id);
         console.log('Received Event: ' + id);
     },
     // iOS
@@ -85,11 +85,11 @@ var push = {
         console.log("Received a notification! " + event.alert);
         alert("Received a notification! " + event.alert);
         console.log("event sound " + event.sound);
-        alert("event sound " + event.sound)
+        //alert("event sound " + event.sound)
         console.log("event badge " + event.badge);
-        alert("event badge " + event.badge);
+       //alert("event badge " + event.badge);
         console.log("event " + event);
-        alert("event " + event);
+       // alert("event " + event);
         if (event.alert) {
             navigator.notification.alert(event.alert);
         }
@@ -122,15 +122,15 @@ var push = {
             case 'message':
               // this is the actual push notification. its format depends on the data model
               // of the intermediary push server which must also be reflected in GCMIntentService.java
-              alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+              //alert('message = '+e.message+' msgcnt = '+e.msgcnt);
             break;
 
             case 'error':
-              alert('GCM error = '+e.msg);
+             // alert('GCM error = '+e.msg);
             break;
 
             default:
-              alert('An unknown GCM event has occurred');
+             // alert('An unknown GCM event has occurred');
               break;
         }
     }
