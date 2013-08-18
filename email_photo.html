@@ -28,6 +28,7 @@
   var pictureSource;   // picture source
   var destinationType; // sets the format of returned value 
   var imgSource;
+  var device_type="";
    emailPhoto();     
 
        // Cordova is ready to be used!
@@ -36,6 +37,7 @@
        
            pictureSource=navigator.camera.PictureSourceType;
            destinationType=navigator.camera.DestinationType;
+		   device_type=device.platform;
        
       // alert(destinationType);
        }
@@ -107,7 +109,7 @@
        {
 	    var emailid=EmailPhoto;
        var subject= subjectPhoto;
-	   var platform = getDevicePlateForm();
+	   var platform = device_type;
 	   if(platform == 'Android'){
 			var data="";
 			data +=' Your Image On  ( '+ src +' ) ';
@@ -141,14 +143,14 @@
           params.value2 = "param";
                   options.params = params;
           var ft = new FileTransfer();
-          ft.upload(imageURI, "http://198.50.99.226/emailphoto.php", win, fail, options);
+          ft.upload(imageURI, "http://198.50.99.226/~admin/emailphoto.php", win, fail, options);
        }
    function win(r) 
    {
       
-     alert("Code = " + r.responseCode);
-     alert("Response = " + r.response);
-     alert("Sent = " + r.bytesSent);
+     //alert("Code = " + r.responseCode);
+     //alert("Response = " + r.response);
+    // alert("Sent = " + r.bytesSent);
      var upload_img_src=r.response; 
      sendMail(upload_img_src);
    }
