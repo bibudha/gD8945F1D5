@@ -39,6 +39,7 @@
     <script type="text/javascript" src="js/klass.min.js"></script>
     <script type="text/javascript" src="js/code.photoswipe.jquery-3.0.5.min.js"></script>
 	<script src="js/jquery.bxslider.js" type="text/javascript"></script>
+	<script type="text/javascript" src="cordova.js"></script>
 	
 	<script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript">
@@ -57,19 +58,20 @@
       document.addEventListener("deviceready", onDeviceReady, false);
       var src = "";
 	  var mediaRec=null;
-     
+	  var device_type="";
+	  var f_path="";
      // Record audio
     
      function recordAudio() {
          
          // Record audio
-        alert("start"+mediaRec);
+        alert("start recording");
          mediaRec.startRecord();
 		// $('#playAudioBtn').removeAttr('disabled');
 	}
      function stopAudio()
      {
- 	    alert("stop"+mediaRec);
+ 	   alert("stop recording");
           
  	    mediaRec.stopRecord();
      }
@@ -82,6 +84,10 @@
         voiceRecording();
          src = "myrecording.wav";
  	    mediaRec = new Media(src, onSuccess, onError);
+		device_type=device.platform;
+		//f_path=Environment.getExternalStorageDirectory();
+		//alert(f_path);
+		
         
         
      }
@@ -108,7 +114,7 @@
      // Play audio
      //
      function playAudio() {
-           alert("play"+mediaRec);
+          alert("playing");
 		 mediaRec = new Media('myrecording.wav');
          mediaRec.play();
 
@@ -116,7 +122,9 @@
      }
  	function uploadVoice() 
    {
-		var audio_path="/mnt/sdcard/myrecording.wav";
+		//var audio_path="/mnt/sdcard/myrecording.wav";
+		//alert(f_path);
+		var audio_path="myrecording.wav";
           var options = new FileUploadOptions();
           options.fileKey="file";
 		  options.fileName="myrecording";
@@ -131,13 +139,13 @@
           params.value2 = "param";
                   options.params = params;
           var ft = new FileTransfer();
-          ft.upload(audio_path, "http://198.50.99.226/emailvoice.php", win, fail, options);
+          ft.upload(audio_path, "http://198.50.99.226/~admin/emailvoice.php", win, fail, options);
        }
    function win(r) 
    {
-     alert("Code = " + r.responseCode);
-     alert("Response = " + r.response);
-     alert("Sent = " + r.bytesSent);
+     //alert("Code = " + r.responseCode);
+    // alert("Response = " + r.response);
+    // alert("Sent = " + r.bytesSent);
      var upload_voice_src=r.response; 
      sendMail(upload_voice_src);
    }
@@ -148,21 +156,26 @@
 			}
 	function sendMail(src)
 		{
-			
-					var platForm = getDevicePlateForm();
+			//alert('coming');
+			//alert(device_type);
+					var platForm = device_type;
 					var subject = subjectVoice;
 					var audiao="";
 					var toRecipients = EmailVoice;
-			if( platform == 'Android' ){
+					
+			if( platForm == 'Android' ){
 					
 					audiao +='Audio link ( ' + src + ' )' +DescriptionVoice;
 				
 					var link_send = "mailto:"+toRecipients+"?body="+audiao+"&subject="+subject;
 					window.location.href = link_send;
 			}else{
-						
+				alert(subject);
+				alert(toRecipients);
 						audiao += '<audio controls><source src="'+src+'" type="audio/wav"></audio>' +DescriptionVoice;
+						alert(audiao);
 						var link_send = "mailto:"+toRecipients+"?body="+audiao+"&subject="+subject;
+						alert(link_send);
 						window.location.href = link_send;
 						
 			}
@@ -190,7 +203,7 @@
         <button data-corners="false" onClick="recordAudio();">Record</button>
 	    <button data-corners="false" onClick="stopAudio();">Stop</button>
         <button data-corners="false" onClick="playAudio();"  id="playAudioBtn"> Play</button>
-	    <button data-corners="false" onClick="sendMail();">Send</button>
+	    <button data-corners="false" onClick="uploadVoice();">Send</button>
 	</div>
 
 </div>
